@@ -1,0 +1,21 @@
+const Sequelize = require('sequelize');
+const connection = require('../../database/index');
+
+const GameDetails = connection.define("Game_details", {
+    gameWeek_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    game_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    result: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+});
+
+GameDetails.sync({force: true});
+
+module.exports = GameDetails;

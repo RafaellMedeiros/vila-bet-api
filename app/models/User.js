@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const connection = require('../../database/index');
 
+const Game = require('./Game');
+
 const User = connection.define("user", {
     name: {
         type: Sequelize.STRING,
@@ -37,6 +39,7 @@ const User = connection.define("user", {
     }
 });
 
-User.sync({force: false});
+
+User.sync({force: true});
 
 module.exports = User;
