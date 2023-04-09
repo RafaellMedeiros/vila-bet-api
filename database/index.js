@@ -9,13 +9,4 @@ const connection = new Sequelize(process.env.DATA_BASE_SCHEMA,
     }
 );
 
-// const connection = new Sequelize('perguntas',
-//     'root',
-//     '663034', 
-//     {
-//         host: 'localhost',
-//         dialect: "mysql"
-//     }
-// );
-
 module.exports = connection;
