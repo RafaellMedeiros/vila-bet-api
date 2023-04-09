@@ -36,7 +36,7 @@ router.post("/register", async (req, res) => {
 
     newUser.password = undefined;
 
-    res.status(200).send({newUser, token: generateToken({ id: newUser.id })});
+    res.status(200).send({newUser, token: generateToken({ permission: newUser.permission })});
 });
 
 
