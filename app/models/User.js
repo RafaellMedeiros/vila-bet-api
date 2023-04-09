@@ -40,6 +40,6 @@ const User = connection.define("user", {
 });
 
 
-User.sync({force: true});
+User.sync({force: false});
 
 module.exports = User;
