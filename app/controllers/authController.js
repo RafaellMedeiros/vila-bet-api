@@ -14,10 +14,9 @@ function generateToken(params = {}) {
     });
 }
 
-router.post("/register", async (req, res) => {
+router.post("/register",  async (req, res) => {
     const {name, email, last_name, telephone, CPF, address, password } = req.body;
-    const user = await User.findOne({ email });
-
+    const user = await User.findOne({ where: { email } });
     if (user) 
         return res.status(400).send({ Error: "user already registered" });
 
@@ -43,7 +42,7 @@ router.post("/register", async (req, res) => {
 
 router.post("/autenticate", async (req, res) => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ where: { email } });
 
     if (!user) 
         return res.status(400).send({ Error: "User not found" });
@@ -53,7 +52,18 @@ router.post("/autenticate", async (req, res) => {
 
     user.password = undefined;
 
-    res.status(200).send({user, token: generateToken({ permission: user.permission })});
+    res.status(200).send({fullname: `${user.name} ${user.last_name}`, token: generateToken({ permission: user.permission })});
+});
+
+router.get("/validate", async (req, res) => {
+    const { token } = req.body;
+    let permission;
+    jwt.verify(token, authConfig.secret, (err, decoded) => {
+        if (err) return res.status(401).send({ isValid: false });
+        permission = decoded.permission;
+        return res.status(401).send({ isValid: true, permission: permission });
+    });
+    
 });
 
 
