@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 const connection = require('../../database/index');
 
-const Game = require('./Game');
-
 const User = connection.define("user", {
     name: {
         type: Sequelize.STRING,
