@@ -56,7 +56,7 @@ router.post("/autenticate", async (req, res) => {
 });
 
 router.get("/validate", async (req, res) => {
-    const { token } = req.body;
+    const token = req.headers.authorization;
     let permission;
     jwt.verify(token, authConfig.secret, (err, decoded) => {
         if (err) return res.status(401).send({ isValid: false });
