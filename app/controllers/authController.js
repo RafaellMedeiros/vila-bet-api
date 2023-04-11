@@ -30,12 +30,12 @@ router.post("/register",  async (req, res) => {
         CPF,
         address,
         password: hash,
-        permission: "USER"
+        permission: "SELLER"
     });
 
     newUser.password = undefined;
 
-    res.status(200).send({newUser, token: generateToken({ permission: newUser.permission })});
+    res.status(200).send({newUser});
 });
 
 
@@ -52,7 +52,7 @@ router.post("/autenticate", async (req, res) => {
 
     user.password = undefined;
 
-    res.status(200).send({fullname: `${user.name} ${user.last_name}`, token: generateToken({ permission: user.permission })});
+    res.status(200).send({fullname: `${user.name} ${user.last_name}`, token: generateToken({ permission: user.permission,  email: user.email})});
 });
 
 router.get("/validate", async (req, res) => {
@@ -64,6 +64,17 @@ router.get("/validate", async (req, res) => {
         return res.status(200).send({ isValid: true, permission: permission });
     });
     
+});
+
+router.get("/user", async (req, res) => {
+    const token = req.headers.authorization;
+    const email = jwt.decode(token).email;
+    const user = await User.findOne({
+        where: {
+            email: email
+        }
+    })
+    res.send({fullName: `${user.name} ${user.last_name}`});
 });
 
 
