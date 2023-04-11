@@ -61,7 +61,7 @@ router.get("/validate", async (req, res) => {
     jwt.verify(token, authConfig.secret, (err, decoded) => {
         if (err) return res.status(401).send({ isValid: false });
         permission = decoded.permission;
-        return res.status(401).send({ isValid: true, permission: permission });
+        return res.status(200).send({ isValid: true, permission: permission });
     });
     
 });
