@@ -15,11 +15,11 @@ const Game = connection.define("game", {
         allowNull: false
     },
     user_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false
     }
 });
 
-Game.sync({force: true});
+Game.sync({force: false});
 
 module.exports = Game;

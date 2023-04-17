@@ -12,8 +12,8 @@ const router = express.Router();
 router.use(authMiddleware);
 
 router.post("/new-game", async (req, res) => {
-    const { results, punter, user_id } = req.body;
-    const user = await User.findOne({ where: { cpf: user_id }});
+    const { results, punter } = req.body;
+    const user = await User.findOne({ where: { cpf: punter.cpf }});
     if (!user) {
         res.status(400).send({ Error: "user invalid" });
         return;
@@ -22,7 +22,7 @@ router.post("/new-game", async (req, res) => {
     const gamesWeek = await GamesWeek.findAll();
     const gamesWeekId = gamesWeek.map(games => games.id);
     const resultsId = results.map(result => result.id);
-    if(_.isEqual(gamesWeekId, resultsId)) {
+    if(!_.isEqual(gamesWeekId, resultsId)) {
         res.status(400).send({ Error: "not informed all games" });
         return;
     }
