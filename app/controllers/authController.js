@@ -74,7 +74,7 @@ router.get("/user", async (req, res) => {
             email: email
         }
     })
-    res.send({fullName: `${user.name} ${user.last_name}`, cpf: user.cpf});
+    res.send({fullName: `${user.name} ${user.last_name}`, cpf: user.CPF});
 });
 
 

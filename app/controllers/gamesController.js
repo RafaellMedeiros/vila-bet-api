@@ -31,7 +31,7 @@ router.post("/new-game", async (req, res) => {
         name: punter.name,
         telephone: punter.telephone,
         address: punter.address,
-        user_id: user.cpf
+        user_id: punter.cpf
     });
 
     const resultsDetails = results.map(result => {

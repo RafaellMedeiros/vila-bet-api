@@ -24,6 +24,6 @@ const GamesWeek = connection.define("games-week", {
     }
 });
 
-GamesWeek.sync({force: true});
+GamesWeek.sync({force: false});
 
 module.exports = GamesWeek;
