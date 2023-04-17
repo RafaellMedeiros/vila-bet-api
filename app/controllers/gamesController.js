@@ -43,7 +43,7 @@ router.post("/new-game", async (req, res) => {
     });
 
     await GameDetails.bulkCreate(resultsDetails);
-    res.status(200).send({msg: "game created"});
+    res.status(200).send({msg: "game created", id: game.id});
 });
 
 router.post("/", async (req, res) => {
