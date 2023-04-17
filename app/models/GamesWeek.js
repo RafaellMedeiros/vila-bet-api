@@ -17,9 +17,13 @@ const GamesWeek = connection.define("games-week", {
     limit_date: {
         type: Sequelize.DATE,
         allowNull: false
+    },
+    removed: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
     }
 });
 
-GamesWeek.sync({force: false});
+GamesWeek.sync({force: true});
 
 module.exports = GamesWeek;

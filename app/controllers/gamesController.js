@@ -46,5 +46,9 @@ router.post("/new-game", async (req, res) => {
     res.status(200).send("game created");
 });
 
+router.post("/", async (req, res) => {
+    const a = await Game.findAll();
+    res.status(200).send(a);
+});
 
 module.exports = app => app.use("/games", router);
