@@ -18,13 +18,14 @@ router.get('/', async (req, res) => {
     for await (const game of gameBd) {
         const b = await GameDetails.findAll({where: {game_id: game.id}});
         const c = await User.findOne({where: { cpf: game.user_id}});
+        const date = new Date(game.createdAt);
         a.push({
             id: game.id,
             seller: `${c.name} ${c.last_name}`,
             name: game.name,
             telephone: game.telephone,
             address: game.address,
-            data: new Date(game.createdAt).getDate() ,
+            date: `${date.getDate}`,
             datails: b
         })
     }
