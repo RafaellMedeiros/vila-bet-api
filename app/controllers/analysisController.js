@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
             name: game.name,
             telephone: game.telephone,
             address: game.address,
-            date: `${date.getDate}`,
+            date: ((date.getDate() )) + "/" + ((date.getMonth() + 1)) + "/" + date.getFullYear(),
             datails: b
         })
     }

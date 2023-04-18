@@ -58,17 +58,12 @@ router.get("/my", async (req, res) => {
     const gameBd = await Game.findOne({raw: true, where: { id }});
     const gameDetails = await GameDetails.findAll({where: {game_id: gameBd.id}});
     const gamesWeek = await GamesWeek.findAll({ attributes: ['id', 'time_home', 'time_away', 'limit_date'], where: {removed: false}})
-    // const date = gameDetails.map(game => {
-    //     return {
-    //         game: 
-    //     }
-    // })
     const date = []
     gamesWeek.forEach( game => {
         let result;
         gameDetails.forEach(det => {
             if (det.gameWeek_id == game.id) {
-                result = det.result
+                result = det.result;
             }
         })
         const aux = {
