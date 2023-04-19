@@ -52,7 +52,7 @@ router.post("/autenticate", async (req, res) => {
 
     user.password = undefined;
 
-    res.status(200).send({fullname: `${user.name} ${user.last_name}`, token: generateToken({ permission: user.permission,  email: user.email})});
+    res.status(200).send({permission: user.permission, fullname: `${user.name} ${user.last_name}`, token: generateToken({ permission: user.permission,  email: user.email})});
 });
 
 router.post("/validate", async (req, res) => {
