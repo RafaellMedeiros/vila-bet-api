@@ -63,7 +63,13 @@ router.get("/my", async (req, res) => {
         let result;
         gameDetails.forEach(det => {
             if (det.gameWeek_id == game.id) {
-                result = det.result;
+                if (det.result == "away") {
+                    result = game.time_home;
+                } else if (det.result == "draw") {
+                    result = "Empate";
+                } else {
+                    result = game.time_away;
+                }
             }
         })
         const aux = {
