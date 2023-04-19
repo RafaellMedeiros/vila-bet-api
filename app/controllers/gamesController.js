@@ -77,7 +77,7 @@ router.get("/my", async (req, res) => {
             time_away: game.time_away,
             result
         }
-        date.push(aux);
+        data.push(aux);
     });
 
     res.status(200).send({ data });
