@@ -48,7 +48,7 @@ router.post("/result-games-week", async (req, res) => {
         });
     });
 
-    res.status(200).send('update successfully');
+    res.status(200).send({msg:'update successfully'});
 });
 
 router.get("/result-games-week", async (req, res) => {
