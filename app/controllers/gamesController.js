@@ -80,7 +80,7 @@ router.get("/my", async (req, res) => {
         date.push(aux);
     });
 
-    res.status(200).send({ date });
+    res.status(200).send({ data });
 });
 
 module.exports = app => app.use("/games", router);
