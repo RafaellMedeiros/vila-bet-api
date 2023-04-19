@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
 
 
 router.get("/my", async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.query;
 
     const gameBd = await Game.findOne({raw: true, where: { id }});
     const gameDetails = await GameDetails.findAll({where: {game_id: gameBd.id}});
