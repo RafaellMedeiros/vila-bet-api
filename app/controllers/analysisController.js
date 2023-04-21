@@ -50,7 +50,7 @@ router.get('/allUsers', async (req, res) => {
         attributes: [ 'name', 'last_name'],
         where: { permission: 'SELLER' }
     });
-    const allUserFullName = allUsers.map( user => { `${user.name} ${user.last_name}`});
+    const allUserFullName = allUsers.map( user => { return `${user.name} ${user.last_name}`});
     res.status(200).json(allUserFullName);
 });
 
