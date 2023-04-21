@@ -16,7 +16,8 @@ const GameDetails = connection.define("Game_details", {
     },
     removed: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue: false
     }
 });
 

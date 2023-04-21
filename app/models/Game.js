@@ -24,7 +24,8 @@ const Game = connection.define("game", {
     },
     removed: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue: false
     }
 });
 

@@ -20,7 +20,8 @@ const GamesWeek = connection.define("games-week", {
     },
     removed: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue: false
     }
 });
 
