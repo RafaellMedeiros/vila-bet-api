@@ -11,11 +11,15 @@ router.use(authMiddleware);
 router.get('/', async (req, res) => {
     const { id, revendedor, date } = req.query;
 
+    const user = await User.findOne({
+        where: { name: revendedor }
+    })
+
     const gameBd = await Game.findAll({
         raw: true,
         where: {
             id,
-            user_id: revendedor,
+            user_id: user.CPF,
             createdAt: date
         }
     });
