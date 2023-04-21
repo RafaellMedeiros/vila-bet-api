@@ -19,7 +19,7 @@ router.post("/new-game", async (req, res) => {
         return;
     }
     
-    const gamesWeek = await GamesWeek.findAll({ removed: false });
+    const gamesWeek = await GamesWeek.findAll({ where: { removed: false } });
     const gamesWeekId = gamesWeek.map(games => games.id);
     const resultsId = results.map(result => result.id);
     if(!_.isEqual(gamesWeekId, resultsId)) {
