@@ -12,7 +12,8 @@ router.get('/', async (req, res) => {
     const { id, seller, date } = req.query;
 
     const where = {
-        id, createdAt: date
+        id: id ? id : null,
+        createdAt: date ? date : null
     }
 
     if (seller) {
