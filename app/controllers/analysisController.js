@@ -79,7 +79,7 @@ router.get('/ranking', async (req, res) => {
             points
         })
     }
-    data.sort((a, b) => { return a.points - b.points })
+    data.sort((a, b) => { return b.points - a.points })
     res.status(200).send({data});
 });
 
