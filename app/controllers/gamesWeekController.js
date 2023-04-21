@@ -90,7 +90,7 @@ router.get("/", async (req, res) => {
     });
 });
 
-router.delete("/", async () => {
+router.delete("/", async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
 
