@@ -59,10 +59,21 @@ router.get("/result-games-week", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-    res.status(200).send(await GamesWeek.findAll({
+
+    let allowed = false;
+
+    const gamesWeek = await GamesWeek.findAll({
         attributes: ['id', 'time_home', 'time_away', 'limit_date'],
-        where: {removed: false}
-    }));
+        where: { removed: false }
+    });
+    
+    if (gamesWeek.length !== 0 && new Date(gamesWeek[0].limit_date.getTime() > new Date().getTime())) {
+        allowed = true;
+    }
+
+    res.status(200).send({
+        gamesWeek
+    });
 });
 
 router.delete("/", async () => {
