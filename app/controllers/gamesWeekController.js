@@ -12,7 +12,7 @@ router.post("/new-games-week", async (req, res) => {
 
     
     if (!(Array.isArray(gamesWeek) || dataLimit)) {
-        res.status(400).send({ Error: "data error" });
+        res.status(400).send({ error: "data error" });
         return;
     }
 
@@ -36,7 +36,7 @@ router.post("/result-games-week", async (req, res) => {
     const bdGamesWeek = await GamesWeek.findAll({ where: { id: { [Op.in]: idResults } }});
     
     if (bdGamesWeek.length !== idResults.length) {
-        res.status(400).send({ Error: "data error" });
+        res.status(400).send({ error: "data error" });
         return;
     }
 

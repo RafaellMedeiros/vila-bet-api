@@ -15,7 +15,7 @@ router.post("/new-game", async (req, res) => {
     const { results, punter } = req.body;
     const user = await User.findOne({ where: { cpf: punter.cpf }});
     if (!user) {
-        res.status(400).send({ Error: "user invalid" });
+        res.status(400).send({ error: "user invalid" });
         return;
     }
     
@@ -23,7 +23,7 @@ router.post("/new-game", async (req, res) => {
     const gamesWeekId = gamesWeek.map(games => games.id);
     const resultsId = results.map(result => result.id);
     if(!_.isEqual(gamesWeekId, resultsId)) {
-        res.status(400).send({ Error: "not informed all games" });
+        res.status(400).send({ error: "not informed all games" });
         return;
     }
 
