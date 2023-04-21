@@ -19,7 +19,7 @@ router.post("/new-game", async (req, res) => {
         return;
     }
     
-    const gamesWeek = await GamesWeek.findAll();
+    const gamesWeek = await GamesWeek.findAll({ removed: false });
     const gamesWeekId = gamesWeek.map(games => games.id);
     const resultsId = results.map(result => result.id);
     if(!_.isEqual(gamesWeekId, resultsId)) {
@@ -53,17 +53,11 @@ router.post("/new-game", async (req, res) => {
     res.status(200).send({msg: "game created", id: game.id});
 });
 
-router.post("/", async (req, res) => {
-    const a = await Game.findAll();
-    res.status(200).send(a);
-});
-
-
 router.get("/my", async (req, res) => {
     const { id } = req.query;
 
-    const gameBd = await Game.findOne({raw: true, where: { id }});
-    const gameDetails = await GameDetails.findAll({where: {game_id: gameBd.id}});
+    const gameBd = await Game.findOne({raw: true, where: { id, removed: false }});
+    const gameDetails = await GameDetails.findAll({where: {game_id: gameBd.id, removed: false}});
     const gamesWeek = await GamesWeek.findAll({ attributes: ['id', 'time_home', 'time_away', 'limit_date'], where: {removed: false}})
     const data = []
     gamesWeek.forEach( game => {

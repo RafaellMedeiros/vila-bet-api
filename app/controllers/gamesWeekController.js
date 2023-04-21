@@ -1,6 +1,8 @@
 const express = require("express");
 const authMiddleware = require("../middleware/auth.js");
 const GamesWeek = require("../models/GamesWeek.js");
+const Game = require("../models/Game.js");
+const GameDetails = require("../models/GameDetails.js");
 const { Op } = require("sequelize");
 
 const router = express.Router();
@@ -33,7 +35,7 @@ router.post("/new-games-week", async (req, res) => {
 router.post("/result-games-week", async (req, res) => {
     const { results } = req.body;
     const idResults = results.map(result => result.id);
-    const bdGamesWeek = await GamesWeek.findAll({ where: { id: { [Op.in]: idResults } }});
+    const bdGamesWeek = await GamesWeek.findAll({ where: { id: { [Op.in]: idResults }, removed: false }});
     
     if (bdGamesWeek.length !== idResults.length) {
         res.status(400).send({ error: "data error" });
@@ -52,8 +54,7 @@ router.post("/result-games-week", async (req, res) => {
 });
 
 router.get("/result-games-week", async (req, res) => {
-    const bdGamesWeek = await GamesWeek.findAll();
-
+    const bdGamesWeek = await GamesWeek.findAll({ where: { removed: false }});
     res.status(200).send(bdGamesWeek);
 });
 
@@ -65,7 +66,18 @@ router.get("/", async (req, res) => {
 });
 
 router.delete("/", async () => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
+
+    if (!user)
+        return res.status(400).send({ error: "User not found" });
+
+    if (!(await bcrypt.compare(password, user.password)))
+        return res.status(400).send({ error: "invalid password" });
+
     await GamesWeek.update({ removed: true });
+    await Game.update({ removed: true });
+    await GameDetails.update({ removed: true });
     res.status(200).send("Week deleted");
 });
 

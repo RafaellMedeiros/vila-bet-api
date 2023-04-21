@@ -21,6 +21,10 @@ const Game = connection.define("game", {
     date: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    removed: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
     }
 });
 
