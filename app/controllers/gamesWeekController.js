@@ -67,9 +67,10 @@ router.get("/", async (req, res) => {
         where: { removed: false }
     });
 
-    if (gamesWeek.length !== 0 && new Date(gamesWeek[0].limit_date.getTime() > new Date().getTime())) {
+    if (gamesWeek.length !== 0 && new Date(gamesWeek[0].limit_date).getTime() > new Date().getTime()) {
         allowed = true;
     }
+
     const date = gamesWeek[0].limit_date;
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
