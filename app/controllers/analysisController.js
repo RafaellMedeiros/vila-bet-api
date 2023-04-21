@@ -13,15 +13,13 @@ router.get('/', async (req, res) => {
     const where = {};
 
     if (id) { where.id = id}
-    if (date) { where.createdAt = date}
+    if (date) { where.date = date}
     if (seller) {
         const user = await User.findOne({
             where: { name: seller }
         })
         where.user_id = user.cpf;
     }
-
-    console.log(where);
 
     const gameBd = await Game.findAll({
         raw: true,

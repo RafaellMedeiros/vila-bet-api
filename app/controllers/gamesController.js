@@ -27,11 +27,14 @@ router.post("/new-game", async (req, res) => {
         return;
     }
 
+    const date = new Date();
+
     const game = await Game.create({
         name: punter.name,
         telephone: punter.telephone,
         address: punter.address,
-        user_id: punter.cpf
+        user_id: punter.cpf,
+        date: date.getFullYear() + "-" + ((date.getMonth() + 1)) + "-" + ((date.getDate() ))
     });
 
     const resultsDetails = results.map(result => {
