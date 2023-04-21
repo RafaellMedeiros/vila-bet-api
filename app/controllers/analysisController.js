@@ -63,7 +63,7 @@ router.get('/allUsers', async (req, res) => {
 router.get('/ranking', async (req, res) => {
     const data = [];
     const gameWeek = await GameWeek.findAll({ attributes: [ 'id', 'result'], raw: true });
-    const games = await User.findAll({});
+    const games = await Game.findAll({});
     for await (const game of games) {
         const user = await User.findOne({where: { cpf: game.user_id}});
         const details = await GameDetail.findAll({ where: { game_id: game.id}, attributes: [ 'gameWeek_id', 'result']});
@@ -80,7 +80,7 @@ router.get('/ranking', async (req, res) => {
         })
     }
     data.sort((a, b) => { return a.points - b.points })
-    return data;
+    res.status(200).send({data});
 });
 
 module.exports = app => app.use("/analysis", router);
