@@ -29,7 +29,7 @@ router.post("/new-games-week", async (req, res) => {
     })
 
     await GamesWeek.bulkCreate(gamesWeekFullData);
-    res.status(200).send("week created successfully");    
+    res.status(200).send({ msg: "week created successfully" });    
 });
 
 router.post("/result-games-week", async (req, res) => {
