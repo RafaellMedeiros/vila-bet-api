@@ -9,8 +9,15 @@ const router = express.Router();
 router.use(authMiddleware);
 
 router.get('/', async (req, res) => {
+    const { id, revendedor, date } = req.query;
+
     const gameBd = await Game.findAll({
-        raw: true
+        raw: true,
+        where: {
+            id,
+            user_id: revendedor,
+            createdAt: date
+        }
     });
 
     let games = [];

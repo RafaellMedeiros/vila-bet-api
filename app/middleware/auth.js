@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader)
-    return res.status(401).send({ Error: "Token was not informed" });
+    return res.status(401).send({ error: "Token was not informed" });
 
   jwt.verify(authHeader, authConfig.secret, (err, decoded) => {
     if (err) return res.status(401).send({ error: "invalid token" });
