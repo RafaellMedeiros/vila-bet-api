@@ -26,8 +26,6 @@ router.get('/', async (req, res) => {
         where.user_id = user.CPF;
     }
 
-    console.log(where);
-
     const gameBd = await Game.findAll({
         raw: true,
         where
