@@ -14,6 +14,11 @@ const GameDetails = connection.define("Game_details", {
         type: Sequelize.STRING,
         allowNull: false
     },
+    removed: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }
 });
 
 GameDetails.sync({force: false});

@@ -18,7 +18,7 @@ router.post("/register",  async (req, res) => {
     const {name, email, last_name, telephone, CPF, address, password } = req.body;
     const user = await User.findOne({ where: { email } });
     if (user) 
-        return res.status(400).send({ Error: "user already registered" });
+        return res.status(400).send({ error: "user already registered" });
 
     const hash = await bcrypt.hash(password, 10);
 
@@ -45,14 +45,14 @@ router.post("/autenticate", async (req, res) => {
     const user = await User.findOne({ where: { email } });
 
     if (!user) 
-        return res.status(400).send({ Error: "User not found" });
+        return res.status(400).send({ error: "User not found" });
 
     if (!(await bcrypt.compare(password, user.password)))
-        return res.status(400).send({ Error: "invalid password" });
+        return res.status(400).send({ error: "invalid password" });
 
     user.password = undefined;
 
-    res.status(200).send({fullname: `${user.name} ${user.last_name}`, token: generateToken({ permission: user.permission,  email: user.email})});
+    res.status(200).send({permission: user.permission, fullname: `${user.name} ${user.last_name}`, token: generateToken({ permission: user.permission,  email: user.email})});
 });
 
 router.post("/validate", async (req, res) => {

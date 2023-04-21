@@ -17,6 +17,15 @@ const Game = connection.define("game", {
     user_id: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    date: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    removed: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 });
 
