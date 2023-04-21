@@ -4,6 +4,7 @@ const GamesWeek = require("../models/GamesWeek.js");
 const Game = require("../models/Game.js");
 const GameDetails = require("../models/GameDetails.js");
 const User = require("../models/User.js");
+const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 
 const router = express.Router();
