@@ -83,7 +83,7 @@ router.get("/", async (req, res) => {
         info: {
             allowed,
             date: {  
-                date: year + "-" + month + "-" + day,
+                date: day + "/" + month + "/" + year,
                 hours: hours + ":" + minutes
             } 
         }
