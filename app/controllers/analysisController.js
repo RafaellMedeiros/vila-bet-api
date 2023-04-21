@@ -9,10 +9,10 @@ const router = express.Router();
 router.use(authMiddleware);
 
 router.get('/', async (req, res) => {
-    const { id, revendedor, date } = req.query;
+    const { id, seller, date } = req.query;
 
     const user = await User.findOne({
-        where: { name: revendedor }
+        where: { name: seller }
     })
 
     const gameBd = await Game.findAll({
