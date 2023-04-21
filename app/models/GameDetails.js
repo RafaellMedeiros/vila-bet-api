@@ -21,6 +21,6 @@ const GameDetails = connection.define("Game_details", {
     }
 });
 
-GameDetails.sync({force: true});
+GameDetails.sync({force: false});
 
 module.exports = GameDetails;
