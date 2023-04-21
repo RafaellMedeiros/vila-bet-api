@@ -78,7 +78,7 @@ router.delete("/", async () => {
     await GamesWeek.update({ removed: true });
     await Game.update({ removed: true });
     await GameDetails.update({ removed: true });
-    res.status(200).send("Week deleted");
+    res.status(200).send({ msg:"Week deleted" });
 });
 
 
