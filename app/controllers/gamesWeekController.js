@@ -101,10 +101,9 @@ router.delete("/", async (req, res) => {
 
     if (!(await bcrypt.compare(password, user.password)))
         return res.status(400).send({ error: "invalid password" });
-
-    await GamesWeek.update({ removed: true });
-    await Game.update({ removed: true });
-    await GameDetails.update({ removed: true });
+    await GamesWeek.update({ removed: true }, {where: {}});
+    await Game.update({ removed: true }, {where: {}});
+    await GameDetails.update({ removed: true }, {where: {}});
     res.status(200).send({ msg:"Week deleted" });
 });
 
