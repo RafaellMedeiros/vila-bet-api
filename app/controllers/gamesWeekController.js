@@ -3,6 +3,7 @@ const authMiddleware = require("../middleware/auth.js");
 const GamesWeek = require("../models/GamesWeek.js");
 const Game = require("../models/Game.js");
 const GameDetails = require("../models/GameDetails.js");
+const User = require("../models/User.js");
 const { Op } = require("sequelize");
 
 const router = express.Router();
