@@ -75,12 +75,17 @@ router.get("/", async (req, res) => {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = (date.getDate()).toString().padStart(2, '0');
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
 
     res.status(200).send({
         gamesWeek,
         info: {
             allowed,
-            date: year + "-" + month + "-" + day
+            date: {  
+                date: year + "-" + month + "-" + day,
+                hours: hours + ":" + minutes
+            } 
         }
     });
 });
