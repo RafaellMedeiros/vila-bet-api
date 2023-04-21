@@ -70,7 +70,7 @@ router.get("/", async (req, res) => {
     });
 
     if (gamesWeek.length == 0) {
-        res.status(200).send({msg: 'games week not found'});
+        res.status(200).send({msg: 'games week not found', info: { allowed}});
         return;
     }
     if (gamesWeek.length !== 0 && new Date(gamesWeek[0].limit_date).getTime() > new Date().getTime()) {
