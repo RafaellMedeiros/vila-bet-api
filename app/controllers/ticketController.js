@@ -6,6 +6,7 @@ const Game = require("../models/Game.js");
 const GameDetails = require("../models/GameDetails.js");
 const User = require("../models/User.js");
 const GamesWeek = require("../models/GamesWeek.js");
+const Utils = require("../../utils/utils.js");
 
 const router = express.Router();
 
@@ -38,11 +39,11 @@ router.get("/", async (req, res) => {
     });
 
     const ranking = [];
-    const gameWeek = await GameWeek.findAll({ attributes: [ 'id', 'result'], raw: true, where: { removed: false } });
+    const gameWeek = await GamesWeek.findAll({ attributes: [ 'id', 'result'], raw: true, where: { removed: false } });
     const games = await Game.findAll({ where: { removed: false } });
     for await (const game of games) {
         const user = await User.findOne({where: { cpf: game.user_id}});
-        const details = await GameDetail.findAll({ where: { game_id: game.id, removed: false}, attributes: [ 'gameWeek_id', 'result']});
+        const details = await GameDetails.findAll({ where: { game_id: game.id, removed: false}, attributes: [ 'gameWeek_id', 'result']});
         const points = Utils.gamePoints(gameWeek, details);
         const date = new Date(game.createdAt);
         ranking.push({
