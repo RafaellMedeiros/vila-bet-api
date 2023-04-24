@@ -57,13 +57,13 @@ router.get("/", async (req, res) => {
         })
     }
     ranking.sort((a, b) => { return b.points - a.points });
-    const posicion = ranking.findIndex(pos => pos.id === id) + 1;
+    const position = ranking.findIndex(pos => pos.id === id) + 1;
 
 
     res.status(200).send({
         table: data,
         name: gameBd.name,
-        posicion
+        position
     });
 })
 
