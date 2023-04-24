@@ -12,7 +12,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 require("./app/controllers/index")(app);
 
-
 app.listen(Global.PORT, () => {
     console.log(`Server listening on ${Global.PORT}`);
 });
