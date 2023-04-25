@@ -83,8 +83,10 @@ router.get("/", async (req, res) => {
     const hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, '0');
 
+    const dataGamesWeek = gamesWeek.map(game => game.result = null)
+
     res.status(200).send({
-        gamesWeek,
+        gamesWeek: dataGamesWeek,
         info: {
             allowed,
             date: {  
