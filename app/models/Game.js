@@ -2,6 +2,13 @@ const Sequelize = require('sequelize');
 const connection = require('../../database/index');
 
 const Game = connection.define("game", {
+    id: {
+        type: Sequelize.STRING,
+        primaryKey: true,
+        defaultValue: function() {
+          return Math.random().toString(36).substr(2, 7).toUpperCase();
+        }
+    },
     name: {
         type: Sequelize.STRING,
         allowNull: false
@@ -27,8 +34,16 @@ const Game = connection.define("game", {
         allowNull: false,
         defaultValue: false
     }
+}, {
+    hooks: {
+        beforeValidate: (instance, options) => {
+            if (!instance.id) {
+              instance.id = Math.random().toString(36).substr(2, 7).toUpperCase();
+            }
+        }
+    }
 });
 
-Game.sync({force: false});
+Game.sync({force: true});
 
 module.exports = Game;

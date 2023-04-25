@@ -7,7 +7,7 @@ const GameDetails = connection.define("Game_details", {
         allowNull: false
     },
     game_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false
     },
     result: {
@@ -21,6 +21,6 @@ const GameDetails = connection.define("Game_details", {
     }
 });
 
-GameDetails.sync({force: false});
+GameDetails.sync({force: true});
 
 module.exports = GameDetails;
