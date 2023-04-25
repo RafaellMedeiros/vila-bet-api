@@ -72,7 +72,11 @@ router.get("/", async (req, res) => {
         res.status(200).send({msg: 'games week not found', info: { allowed}});
         return;
     }
-    if (gamesWeek.length !== 0 && new Date(gamesWeek[0].limit_date).toISOString() > new Date().toISOString()) {
+
+    const limitDate = new Date(gamesWeek[0].limit_date);
+    limitDate.setHours(limitDate.getHours() + 3);
+
+    if (gamesWeek.length !== 0 && limitDate.toISOString() > new Date().toISOString()) {
         allowed = true;
     }
 
