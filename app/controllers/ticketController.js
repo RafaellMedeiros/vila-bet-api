@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
         let result;
         gameDetails.forEach(det => {
             if (det.gameWeek_id == game.id) {
-                if (det.result == "away") {
+                if (det.result == "home") {
                     result = game.time_home;
                 } else if (det.result == "draw") {
                     result = "Empate";
