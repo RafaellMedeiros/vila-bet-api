@@ -81,7 +81,7 @@ router.get("/my", async (req, res) => {
         data.push(aux);
     });
 
-    res.status(200).send({ data });
+    res.status(200).send({ data, telephone: gameBd.telephone });
 });
 
 module.exports = app => app.use("/games", router);
