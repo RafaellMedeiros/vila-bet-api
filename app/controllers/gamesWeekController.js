@@ -65,7 +65,6 @@ router.get("/", async (req, res) => {
     let allowed = false;
 
     const gamesWeek = await GamesWeek.findAll({
-        attributes: ['id', 'time_home', 'time_away', 'limit_date'],
         where: { removed: false }
     });
 
