@@ -6,13 +6,12 @@ require('dotenv').config()
 
 const app = express();
 
-// const corsOptions = {
-//     origin: 'https://vila-bet.herokuapp.com/'
-// };
-app.use(function(req, res, next) {
-    res.set('Access-Control-Allow-Origin', '*');
-    next();
-});
+app.use(cors({
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Groups', 'ActiveUserSessionId'],
+    origin: '*'
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
