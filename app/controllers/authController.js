@@ -10,7 +10,7 @@ router.use(authMiddleware);
 
 function generateToken(params = {}) {
     return jwt.sign(params, authConfig.secret, {
-      expiresIn: 1200
+      expiresIn: 10000
     });
 }
 
