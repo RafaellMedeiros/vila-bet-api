@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
     res.status(200).json(games);
 });
 
-router.post('/mysales', async (req, res) => {
+router.get('/mysales', async (req, res) => {
     const token = req.headers.authorization;
     const email = jwt.decode(token).email;
 
