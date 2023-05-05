@@ -50,7 +50,7 @@ router.get('/', async (req, res) => {
     res.status(200).json(games);
 });
 
-router.get('/mysales', async (req, res) => {
+router.post('/mysales', async (req, res) => {
     const { seller } = req.body;
 
     const user = await User.findOne({
