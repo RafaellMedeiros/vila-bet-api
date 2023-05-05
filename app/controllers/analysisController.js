@@ -70,7 +70,7 @@ router.get('/mysales', async (req, res) => {
     });
 
     let games = [];
-    if (gamesBd.length > 0) {
+    if (gameBd.length > 0) {
         for await (const game of gameBd) {
             const user = await User.findOne({where: { cpf: game.user_id}});
             const date = new Date(game.createdAt);
