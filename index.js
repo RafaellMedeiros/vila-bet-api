@@ -10,7 +10,7 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Groups', 'ActiveUserSessionId'],
     origin: '*'
-}));
+})); 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
