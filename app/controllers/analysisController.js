@@ -16,15 +16,14 @@ router.get('/', async (req, res) => {
     const { id, seller, date } = req.query;
     const arraySeller = seller.split(' ');
     const name = arraySeller[0];
-    const last_name = arraySeller[1];
 
     const where = { removed: false };
 
     if (id) { where.id = id}
     if (date) { where.date = date}
-    if (name && last_name) {
+    if (name) {
         const user = await User.findOne({
-            where: { name, last_name }
+            where: { name }
         })
         where.user_id = user.CPF;
     }
