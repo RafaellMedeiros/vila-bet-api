@@ -12,7 +12,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 router.use(authMiddleware);
 
-router.get('/', async (req, res) => { 
+router.get('/', async (req, res) => {
     const { id, seller, date } = req.query;
     const arraySeller = seller.split(' ');
     const name = arraySeller[0];
