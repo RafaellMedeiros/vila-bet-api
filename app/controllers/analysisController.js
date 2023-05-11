@@ -89,7 +89,7 @@ router.get('/mysales', async (req, res) => {
 
 
 
-router.get('/allUsers', async (req, res) => {
+router.get('/allUsers', async (req, res) => { 
     const allUsers = await User.findAll({
         attributes: [ 'name', 'last_name'],
         where: { permission: 'SELLER' }
