@@ -2,7 +2,7 @@ const express = require("express");
 const authMiddleware = require("../middleware/auth.js");
 const _ = require('lodash');
 
-const Game = require("../models/Game.js");
+const Game = require("../models/Game.js"); 
 const User = require("../models/User.js");
 const GameDetail = require("../models/GameDetails.js");
 const GameWeek = require("../models/GamesWeek.js");
