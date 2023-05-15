@@ -67,4 +67,16 @@ router.get("/", async (req, res) => {
     });
 })
 
+router.delete('/', async (req, res) => {
+    const id = req.body.id;
+    const game = await Game.findOne({raw: true, where: { id, removed: false }});
+
+    if (!game) {
+        res.status(404).send({ codeError: 404, info: 'Game not found' });
+        return;
+    }
+    await Game.update({ removed: true }, {where: { id }});
+    res.send({});
+});
+
 module.exports = app => app.use("/ticket", router);
