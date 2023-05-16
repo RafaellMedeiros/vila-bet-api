@@ -14,6 +14,10 @@ router.get("/", async (req, res) => {
     const { id } = req.query;
 
     const gameBd = await Game.findOne({raw: true, where: { id, removed: false }});
+    if (!gameBd) { 
+        res.status(404).send({ msg: "Game not found" }); 
+        return;
+    }
     const gameDetails = await GameDetails.findAll({where: {game_id: gameBd.id, removed: false}});
     const gamesWeek = await GamesWeek.findAll({ attributes: ['id', 'time_home', 'time_away', 'limit_date'], where: {removed: false}});
     const data = [];
