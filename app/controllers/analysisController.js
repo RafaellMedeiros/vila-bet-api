@@ -98,7 +98,7 @@ router.get('/allUsers', async (req, res) => {
     res.status(200).json(allUserFullName);
 });
 
-router.get('/ranking', async (req, res) => {
+router.get('/ranking', async (req, res) => { 
     const data = [];
     const gameWeek = await GameWeek.findAll({ attributes: [ 'id', 'result'], raw: true, where: { removed: false } });
     const games = await Game.findAll({ where: { removed: false } });
