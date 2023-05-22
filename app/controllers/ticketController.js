@@ -1,6 +1,7 @@
 const express = require("express");
 const authMiddleware = require("../middleware/auth.js");
-const _ = require('lodash');
+const _ = require("lodash");
+const Op = require("sequelize");
 
 const Game = require("../models/Game.js");
 const GameDetails = require("../models/GameDetails.js");
@@ -11,76 +12,77 @@ const Utils = require("../../utils/utils.js");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-    const { id } = req.query;
+  const { id } = req.query;
 
-    const gameBd = await Game.findOne({raw: true, where: { id, removed: false }});
-    if (!gameBd) { 
-        res.status(404).send({ msg: "Game not found" }); 
-        return;
-    }
-    const gameDetails = await GameDetails.findAll({where: {game_id: gameBd.id, removed: false}});
-    const gamesWeek = await GamesWeek.findAll({ attributes: ['id', 'time_home', 'time_away', 'limit_date'], where: {removed: false}});
-    const data = [];
-    gamesWeek.forEach( game => {
-        let result;
-        gameDetails.forEach(det => {
-            if (det.gameWeek_id == game.id) {
-                if (det.result == "home") {
-                    result = game.time_home;
-                } else if (det.result == "draw") {
-                    result = "Empate";
-                } else {
-                    result = game.time_away;
-                }
-            }
-        })
-        const aux = {
-            time_home: game.time_home,
-            time_away: game.time_away,
-            result
+  const gameBd = await Game.findOne({
+    raw: true,
+    where: { id },
+  });
+  if (!gameBd) {
+    res.status(404).send({ msg: "Game not found" });
+    return;
+  }
+  const gameDetails = await GameDetails.findAll({
+    where: { game_id: gameBd.id },
+  });
+  const idsGameWeek = gameDetails.map((game) => game.gameWeek_id);
+  const gamesWeek = await GamesWeek.findAll({
+    raw: true,
+    attributes: ["id", "time_home", "time_away", "limit_date", "result"],
+    where: {
+      id: idsGameWeek,
+    },
+  });
+  const data = [];
+  let count = 0;
+  gamesWeek.forEach((game) => {
+    let result;
+    let color = "red";
+    gameDetails.forEach((det) => {
+      if (det.gameWeek_id == game.id) {
+        if (det.result == "home") {
+          result = game.time_home;
+        } else if (det.result == "draw") {
+          result = "Empate";
+        } else {
+          result = game.time_away;
         }
-        data.push(aux);
+        if (game.result === null) {
+          color = "white";
+        }
+
+        if (game.result == det.result) {
+          color = "green";
+          count = count + 1;
+        }
+      }
     });
+    const aux = {
+      time_home: game.time_home,
+      time_away: game.time_away,
+      result,
+      color,
+    };
+    data.push(aux);
+  });
 
-    const ranking = [];
-    const gameWeek = await GamesWeek.findAll({ attributes: [ 'id', 'result'], raw: true, where: { removed: false } });
-    const games = await Game.findAll({ where: { removed: false } });
-    for await (const game of games) {
-        const user = await User.findOne({where: { cpf: game.user_id}});
-        const details = await GameDetails.findAll({ where: { game_id: game.id, removed: false}, attributes: [ 'gameWeek_id', 'result']});
-        const points = Utils.gamePoints(gameWeek, details);
-        const date = new Date(game.createdAt);
-        ranking.push({
-            id: game.id,
-            seller: `${user.name} ${user.last_name}`,
-            name: game.name,
-            telephone: game.telephone,
-            address: game.address,
-            date: ((date.getDate() )) + "/" + ((date.getMonth() + 1)) + "/" + date.getFullYear(),
-            points
-        })
-    }
-    ranking.sort((a, b) => { return b.points - a.points });
-    const position = ranking.findIndex(pos => pos.id == id) + 1;
-
-
-    res.status(200).send({
-        table: data,
-        name: gameBd.name,
-        position
-    });
-})
-
-router.delete('/', async (req, res) => {
-    const id = req.body.id;
-    const game = await Game.findOne({raw: true, where: { id, removed: false }});
-
-    if (!game) {
-        res.status(404).send({ codeError: 404, info: 'Game not found' });
-        return;
-    }
-    await Game.update({ removed: true }, {where: { id }});
-    res.send({});
+  res.status(200).send({
+    table: data,
+    name: gameBd.name,
+    count,
+  });
 });
 
-module.exports = app => app.use("/ticket", router);
+router.delete("/", async (req, res) => {
+  const id = req.body.id;
+  const game = await Game.findOne({ raw: true, where: { id, removed: false } });
+
+  if (!game) {
+    res.status(404).send({ codeError: 404, info: "Game not found" });
+    return;
+  }
+  await Game.update({ removed: true }, { where: { id } });
+  res.send({});
+});
+
+module.exports = (app) => app.use("/ticket", router);
