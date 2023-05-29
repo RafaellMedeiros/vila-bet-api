@@ -28,7 +28,15 @@ router.get("/", async (req, res) => {
   const idsGameWeek = gameDetails.map((game) => game.gameWeek_id);
   const gamesWeek = await GamesWeek.findAll({
     raw: true,
-    attributes: ["id", "time_home", "time_away", "limit_date", "result"],
+    attributes: [
+      "id",
+      "time_home",
+      "time_away",
+      "limit_date",
+      "result",
+      "ligue",
+      "date_game",
+    ],
     where: {
       id: idsGameWeek,
     },
@@ -57,9 +65,12 @@ router.get("/", async (req, res) => {
         }
       }
     });
+    const date = Utils.convertDate(game.date_game);
     const aux = {
       time_home: game.time_home,
       time_away: game.time_away,
+      ligue: game.ligue,
+      date_game: `${date.fullDate} ${date.hours}`,
       result,
       color,
     };
