@@ -109,18 +109,13 @@ router.get("/ranking", async (req, res) => {
     raw: true,
     where: { removed: false },
   });
-  const games = await Game.findAll({ where: { removed: false } });
+  const games = await Game.findAll({ raw: true, where: { removed: false } });
   for await (const game of games) {
-    const user = await User.findOne({ where: { cpf: game.user_id } });
-    const details = await GameDetail.findAll({
-      where: { game_id: game.id, removed: false },
-      attributes: ["gameWeek_id", "result"],
-    });
-    const points = Utils.gamePoints(gameWeek, details);
+    const points = Utils.gamePoints(gameWeek, game.game_details);
     const date = new Date(game.createdAt);
     data.push({
       id: game.id,
-      seller: `${user.name} ${user.last_name}`,
+      seller: game.user_name,
       name: game.name,
       telephone: game.telephone,
       address: game.address,

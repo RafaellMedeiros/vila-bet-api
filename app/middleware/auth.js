@@ -4,6 +4,7 @@ const Global = require("../../utils/global");
 
 module.exports = (req, res, next) => {
   if (req.originalUrl === Global.ROUTER_AUTH) return next();
+  if (req.originalUrl === Global.ROUTER_GAME_WEEK) return next();
 
   const authHeader = req.headers.authorization;
 

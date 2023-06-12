@@ -32,12 +32,20 @@ router.post("/new-game", async (req, res) => {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
+  const resultDetailsJson = results.map((result) => {
+    return {
+      gameWeek_id: result.id,
+      result: result.result,
+    };
+  });
 
   const game = await Game.create({
     name: punter.name,
     telephone: punter.telephone,
     address: punter.address,
     user_id: punter.cpf,
+    user_name: `${user.name} ${user.last_name}`,
+    game_details: resultDetailsJson,
     date: year + "-" + month + "-" + day,
   });
 

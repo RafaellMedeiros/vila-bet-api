@@ -33,6 +33,21 @@ class Utils {
       hours: hours + ":" + minutes,
     };
   }
+
+  static createJson(data) {
+    const { info, game } = data;
+    const newGames = game.map((obj) => {
+      return {
+        id: obj.id,
+        result: obj.result,
+      };
+    });
+
+    return {
+      info,
+      game: newGames,
+    };
+  }
 }
 
 module.exports = Utils;

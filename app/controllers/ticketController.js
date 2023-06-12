@@ -8,6 +8,7 @@ const GameDetails = require("../models/GameDetails.js");
 const User = require("../models/User.js");
 const GamesWeek = require("../models/GamesWeek.js");
 const Utils = require("../../utils/utils.js");
+const GameRemote = require("../models/GameRemote.js");
 
 const router = express.Router();
 
@@ -94,6 +95,27 @@ router.delete("/", async (req, res) => {
   }
   await Game.update({ removed: true }, { where: { id } });
   res.send({});
+});
+
+router.post("/remote", async (req, res) => {
+  const jsonData = Utils.createJson(req.body);
+  const RemoteGame = await GameRemote.create({
+    games: jsonData,
+  });
+
+  res.send({ id: RemoteGame.id });
+});
+
+router.get("/remote", async (req, res) => {
+  const RemoteGame = await GameRemote.findOne({
+    raw: true,
+    where: { id: req.query.id },
+  });
+  if (RemoteGame) {
+    res.send({ RemoteGame });
+    return;
+  }
+  res.status(404).send({});
 });
 
 module.exports = (app) => app.use("/ticket", router);
