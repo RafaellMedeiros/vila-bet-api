@@ -9,7 +9,7 @@ const { Op } = require("sequelize");
 const Utils = require("../../utils/utils.js");
 
 const router = express.Router();
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
 router.post("/new-games-week", async (req, res) => {
   const { gamesWeek, dataLimit } = req.body;
