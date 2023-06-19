@@ -48,7 +48,7 @@ router.post("/new-game", async (req, res) => {
     user_id: punter.cpf,
     user_name: `${user.name} ${user.last_name}`,
     game_details: resultDetailsJson,
-    date: `${day}-${month}-${year} ${hours}:${minutes}`,
+    date: `${day}-${month}-${year} ${hours - 3}:${minutes}`,
   });
 
   const resultsDetails = results.map((result) => {
