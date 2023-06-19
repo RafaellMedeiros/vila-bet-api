@@ -82,6 +82,7 @@ router.get("/", async (req, res) => {
     table: data,
     name: gameBd.name,
     count,
+    createAt: gameBd.date,
   });
 });
 
